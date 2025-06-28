@@ -16,11 +16,17 @@ if (oldRoot) {
 const newRoot = document.createElement('div')
 newRoot.id = 'root-react'
 document.body.appendChild(newRoot)
+// check if there is an element with class "nightMode" or "night-mode" in the document
+const nightModeElement = document.querySelector('.nightMode') || document.querySelector('.night-mode');
+
+
+const defaultScheme = nightModeElement ? 'dark' : 'dark';
 
 createRoot(document.getElementById('root-react')).render(
   <StrictMode>
         <MantineProvider 
-    withGlobalClasses 
+        withGlobalClasses
+        defaultColorScheme={defaultScheme}
       ><App /></MantineProvider>
   </StrictMode>,
 )
