@@ -144,10 +144,15 @@ function ClozeCard(
                             ))
                         )}
                     </Group>
+
                     <Paper
                         p="md"
                         bg={colors.front.bg}
-                        style={getBorderStyle(colors.front.border)}
+                        style={{
+                            ...getBorderStyle(colors.front.border),
+                            maxHeight: '90vh',
+                            overflowY: 'auto'
+                        }}
                         radius="sm"
                     >
                         <Markdown allowHtml={true}>{clozeCardContent.front}</Markdown>

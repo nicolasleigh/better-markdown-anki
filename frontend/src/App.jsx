@@ -39,10 +39,12 @@ function App() {
     // UseEffect to determine if the "Buy me a coffee" button should be shown
     useEffect(() => {
         const random = Math.random();
-        if (random <= 0.03) {
+        if (random <= 0.005) {
             setShowBuyMeACoffee(true);
-        } else {
-            setShowBuyMeACoffee(false);
+            // Set a timeout to hide the button after 20 seconds
+            const timer = setTimeout(() => {
+                setShowBuyMeACoffee(false);
+            }, 20000);
         }
     }, [tiggerBuyMeACoffee]); // Empty dependency array ensures this runs only once on mount
 
@@ -171,8 +173,8 @@ function App() {
      * Render card sections
      *------------------------------------------------------------------*/
     return (
+        // TODO optional :  w={{ base: '100%', lg: '75%' }}
         <Card shadow="sm" padding="md" radius="md" withBorder>
-
             <TagsAndDifficulty tags={tags} difficulty={difficulty} />
             {showBasicCard && <BasicCard contentVersion={basicNodes.contentVersion} colors={colors} frontNode={basicNodes.front} backNode={basicNodes.back} extraNode={basicNodes.extra} />}
             {showClozeCard && <ClozeCard contentVersion={clozeNodes.contentVersion} colors={colors} frontNode={clozeNodes.front} backNode={clozeNodes.back} extraNode={clozeNodes.extra} />}
@@ -184,7 +186,7 @@ function App() {
                     href="https://coff.ee/alexthilleq"
                     target="_blank"
                     rel="noopener noreferrer"
-                    leftSection={<IconCoffee size={16} />}
+                    leftSection={<IconCoffee size={24} />}
                     variant="filled"
                     color="yellow"
                     size="sm"
@@ -194,7 +196,7 @@ function App() {
                         color: colorScheme === 'dark' ? 'var(--mantine-color-dark-9)' : 'var(--mantine-color-dark-9)'
                     }}
                 >
-                    Buy me a coffee
+                    Like this Addon? Consider Buying Me a Coffee!
                 </Button>
             )}
 

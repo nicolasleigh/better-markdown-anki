@@ -101,7 +101,10 @@ const Markdown = ({
 
     // Preprocess HTML breaks to newlines
     const preprocessHtmlBreaks = (content) => {
-        return content.replace(/<br\s*\/?>/gi, '\n');
+        return content
+            .replace(/<br\s*\/?>/gi, '\n')
+            .replace(/<div\s*\/?>/gi, '\n') // TODO : maybe only do this in code blocks?
+            .replace(/<\/div>/gi, '\n');
     };
 
     // Process content with HTML break preprocessing
