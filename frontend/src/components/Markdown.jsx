@@ -13,41 +13,42 @@ import 'katex/dist/katex.min.css';
 
 // Function to decode HTML entities
 const decodeHtmlEntities = (text) => {
-    const entityMap = {
-        '&#x27;': "'",
-        '&#39;': "'",
-        '&apos;': "'",
-        '&quot;': '"',
-        '&#x22;': '"',
-        '&lt;': '<',
-        '&gt;': '>',
-        '&amp;': '&',
-        '&#x2F;': '/',
-        '&#x5C;': '\\',
-        '&#x60;': '`',
-        '&#x3D;': '=',
-        '&#35;': '#',
-        '&#x23;': '#',
-    };
-
-    // Replace named and numeric entities
-    let decoded = text;
-    Object.entries(entityMap).forEach(([entity, char]) => {
-        decoded = decoded.replace(new RegExp(entity, 'g'), char);
-    });
-
-    // Handle any remaining numeric entities (decimal)
-    decoded = decoded.replace(/&#(\d+);/g, (_match, dec) => {
-        return String.fromCharCode(parseInt(dec, 10));
-    });
-
-    // Handle any remaining numeric entities (hexadecimal)
-    decoded = decoded.replace(/&#x([0-9A-Fa-f]+);/g, (_match, hex) => {
-        return String.fromCharCode(parseInt(hex, 16));
-    });
-
-    return decoded;
+    // Use the browser's DOMParser to decode HTML entities
+    if (typeof window !== 'undefined' && window.DOMParser) {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(`<!doctype html><body>${text}`, 'text/html');
+        return doc.body.textContent;
+    }
 };
+
+
+function decodeMarkdownMathContent(markdownText) {
+    // Handle block math: $$...$$ and \[...\]
+    const blockMathRegex = /(\$\$([\s\S]*?)\$\$|\\\[([\s\S]*?)\\\])/g;
+
+    let res = markdownText.replace(blockMathRegex, (match, fullMatch, dollarContent, bracketContent) => {
+        let content = dollarContent || bracketContent;
+        let processedContent = content.replace(/<br\s*\/?>/gi, '\n');
+        processedContent = decodeHtmlEntities(processedContent);
+        if (dollarContent !== undefined) {
+            return `$$${processedContent}$$`;
+        } else {
+            return `\\[${processedContent}\\]`;
+        }
+    });
+    const inlineMathRegex = /((?<!\$)\$([^$\n]+)\$(?!\$)|\\\(([^)]*?)\\\))/g;
+    res = res.replace(inlineMathRegex, (match, fullMatch, dollarContent, parenContent) => {
+        let content = dollarContent || parenContent;
+        let processedContent = content.replace(/<br\s*\/?>/gi, ' ');
+        processedContent = decodeHtmlEntities(processedContent);
+        if (dollarContent !== undefined) {
+            return `$${processedContent}$`;
+        } else {
+            return `\\(${processedContent}\\)`;
+        }
+    });
+    return res;
+}
 
 // Custom sanitization schema for safe HTML rendering
 const createSanitizationSchema = () => {
@@ -93,8 +94,24 @@ const Markdown = ({
     const { colorScheme } = useMantineColorScheme();
     const syntaxTheme = colorScheme === 'dark' ? oneDark : oneLight;
 
-    // Process content based on HTML allowance
-    const processedContent = allowHtml ? children : decodeHtmlEntities(children);
+    const preprocessSpecialCharacters = (content) => {
+        // \: --> :
+        return content.replace(/\\:/g, ':');
+    };
+
+    // Preprocess HTML breaks to newlines
+    const preprocessHtmlBreaks = (content) => {
+        return content.replace(/<br\s*\/?>/gi, '\n');
+    };
+
+    // Process content with HTML break preprocessing
+    const processedContent = (() => {
+        let content = allowHtml ? children : decodeHtmlEntities(children);
+        content = preprocessHtmlBreaks(content);
+        content = preprocessSpecialCharacters(content);
+        content = decodeMarkdownMathContent(content);
+        return content;
+    })();
 
     const inlineCodeStyles = {
         backgroundColor: colorScheme === 'dark' ? '#2d3748' : '#f7fafc',
@@ -107,7 +124,6 @@ const Markdown = ({
 
     const syntaxHighlighterCustomStyle = {
         borderRadius: '4px',
-        fontSize: '11px',
         padding: '8px',
         marginTop: '0.5em',
         marginBottom: '0.5em',
@@ -116,7 +132,6 @@ const Markdown = ({
     // Build rehype plugins array
     const buildRehypePlugins = () => {
         const plugins = [rehypeKatex];
-
         if (allowHtml) {
             plugins.push(rehypeRaw);
 
@@ -149,7 +164,7 @@ const Markdown = ({
                         ...props
                     }) => {
                         const match = /language-(\w+)/.exec(codeClassName || '');
-                        const codeString = String(codeChildren).replace(/^\n/, '').replace(/\n$/, '');
+                        const codeString = String(decodeHtmlEntities(codeChildren)).replace(/^\n/, '').replace(/\n$/, '');
                         return match ? (
                             <SyntaxHighlighter
                                 style={syntaxTheme}
@@ -157,6 +172,14 @@ const Markdown = ({
                                 PreTag="div"
                                 customStyle={{
                                     ...syntaxHighlighterCustomStyle,
+                                }}
+                                codeTagProps={{
+                                    style: {
+                                        lineHeight: "inherit",
+                                        fontSize: "inherit",
+                                        backgroundColor: 'inherit',
+                                        padding: '0',
+                                    }
                                 }}
                                 wrapLines
                                 {...props}

@@ -8,7 +8,6 @@ from .utils import add_folder_to_media, patch_variables_in_file
 
 ################################ CONFIGURATION #####################################################
 
-
 TAG = "DEV_TAG" # Replace with actual release tag
 
 ADDON_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
@@ -25,14 +24,13 @@ CLOZE_TEMPLATE_BACK = patch_variables_in_file(os.path.join(TEMPLATE_DIR, "cloze"
 
 
 # CARD NAME
-CARD_NAME = "Better Markdown Anki ({type})"
+CARD_NAME = "Better Markdown : {type}"
+TEMPLATE_NAME = "Better Markdown ({type})" 
 
 
 # FIELDS
 FIELDS_BASIC = ["Front", "Back", "Extra", "Difficulty"]
 FIELDS_CLOZE = ["Text", "Back Extra", "Difficulty"]
-
-
 
 ####################################################################################################
 
@@ -77,13 +75,14 @@ def _create_basic_note_type(name: str, mm: ModelManager) -> bool:
         field = mm.new_field(field_name)  # Updated from newField and removed _()
         mm.add_field(model, field)  # Updated from addField
     
-    # Create main card template using configured templates
-    template = mm.new_template("Card 1")  # Updated from newTemplate and removed _()
+    # Create main card template using configured template name
+    template_name = TEMPLATE_NAME.format(type="Basic")
+    template = mm.new_template(template_name)
     template['qfmt'] = BASIC_TEMPLATE_FRONT
     template['afmt'] = BASIC_TEMPLATE_BACK
-    
-    mm.add_template(model, template)  # Updated from addTemplate
-    
+
+    mm.add_template(model, template)
+
     # Set CSS styling
     model['css'] = CSS_TEMPLATE
     
@@ -106,8 +105,9 @@ def _create_cloze_note_type(name: str, mm: ModelManager) -> bool:
         mm.add_field(model, field)
         print(f"Added field '{field_name}' to cloze model")
     
-    # Create cloze template using configured templates
-    template = mm.new_template("Cloze")
+    # Create cloze template using configured template name
+    template_name = TEMPLATE_NAME.format(type="Cloze")
+    template = mm.new_template(template_name)
     template['qfmt'] = CLOZE_TEMPLATE_FRONT
     template['afmt'] = CLOZE_TEMPLATE_BACK
 
@@ -224,9 +224,8 @@ if __name__ != "__main__":
     def on_profile_loaded():
         """Called when user profile is loaded"""
         setup_custom_note_types()
-        add_folder_to_media(DIST_DIRECTORY)
+        add_folder_to_media(DIST_DIRECTORY, overwrite=True)
     
     # Hook into Anki's profile loading
     gui_hooks.profile_did_open.append(on_profile_loaded)
 
-    

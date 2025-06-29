@@ -149,7 +149,7 @@ function App() {
                 border: isDark ? 'dark.4' : 'gray.3'
             },
             back: {
-                bg: isDark ? 'dark.5' : 'blue.1',
+                bg: isDark ? 'dark.5' : 'blue.0',
                 border: isDark ? 'blue.8' : 'blue.3'
             },
             extra: {

@@ -1,10 +1,13 @@
-<html class="linux chrome" dir="ltr" data-bs-theme="light"><head>
+<html class="linux chrome" dir="ltr" data-bs-theme="light">
+    <head>
+    <meta charset="utf-8">
     <title>card layout</title>
 <!-- <base href="http://127.0.0.1:45901/"><link rel="stylesheet" type="text/css" href="http://127.0.0.1:45901/_anki/css/webview.css"> -->
 <script type="module" src="/src/main.jsx"></script>
 </head>
 
 <body class="card card1 isLin fancy">
+    
 <script src="http://127.0.0.1:45901/_anki/js/webview.js"></script>
 <script src="http://127.0.0.1:45901/_anki/js/mathjax.js"></script>
 <script src="http://127.0.0.1:45901/_anki/js/vendor/mathjax/tex-chtml-full.js"></script>
@@ -13,14 +16,13 @@
 <div id="_mark" hidden="">★</div>
 <div id="_flag" hidden="">⚑</div>
 
-<div id="front-card-cloze" class="field">
-
-$\phi = 1.618033988749895$
-
-$$x_1 = \frac{-b + \sqrt{b^2 - 4ac}}{2a}$$
-
-The <span class="cloze" data-cloze="&quot;Tokens/sec&quot;" data-ordinal="1">[...]</span> metric demonstrated significant training speed advantages of FlashAttentionV3 across various `ATTENTION_TYPES` and `SEQLENS`.<br><br><br>\$123 is greater than \%123 or 88\$.<br><br>\$123 is greater than \%123 or 88\$.<br><br><br>```python<br>print("Hello <span class="cloze" data-cloze="World" data-ordinal="1">[...]</span>")<br>```
+<div id="front-card-cloze">
+# A Dummy Card Subtitle<br><br>```php<br><br>$x = "teste";<br>$a = 123<br>```
+<br>&nbsp;```php
+<br>$x =  "teste";
+<br>```<br><br>### Math<br>- <span class="cloze" data-cloze="$\pi=3.1415...$" data-ordinal="1">[$\pi=...$]</span><br>### Escaping dollar<br><br>$$1\$ &lt; 1€$$ <br>after<br><br>### Escaped c++ code :<br><br>```cpp<br>#include &lt;stdio.h&gt;<br><span class="cloze-inactive" data-ordinal="2">boost:\:add_vertex</span>(...);<br>```<br><br>### Python<br><br>```py<br>def print_hello():<br>&nbsp; print("<span class="cloze-inactive" data-ordinal="2">hello</span>")<br>```
 </div>
+
 <div id="back-card-cloze" class="field">
 
 $123$
@@ -41,8 +43,9 @@ This indicates that even with optimized attention mechanisms, there are still me
 
 
 <div id="front-card-basic">
-### What is the **general relationship between PCA and k-means clustering**?
+# Hello<br><br>## How are you?
 </div>
+
 <div id="back-card-basic">
 Both PCA and k-means clustering are solving the same fundamental problem of **compressing data with maximum fidelity** (minimizing reconstruction error), but under **different constraints** on the model complexity. They can be unified under a broader class of techniques known as **matrix factorization methods**.
 </div>

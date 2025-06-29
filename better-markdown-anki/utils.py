@@ -48,18 +48,25 @@ def patch_variables_in_text(text: str, variables: Dict[str, str]) -> str:
     return text
 
 
-def _add_file_to_media(path):
+def _add_file_to_media(path, overwrite: bool = False):
     filename = os.path.basename(path)
     assert isinstance(mw.col, Collection), "Expected mw.col to be an instance of Collection"
-    if not os.path.isfile(os.path.join(mw.col.media.dir(), filename)):
+    
+    media_file_path = os.path.join(mw.col.media.dir(), filename)
+    
+    if not os.path.isfile(media_file_path):
         mw.col.media.add_file(path)
+    elif overwrite:
+        os.remove(media_file_path) 
+        mw.col.media.add_file(path) 
 
-def add_folder_to_media(folder_path: str):
+def add_folder_to_media(folder_path: str, overwrite: bool = False):
     """
     Add all files in a folder to Anki's media collection.
     
     Args:
         folder_path: Path to the folder containing files to add
+        overwrite: Whether to overwrite existing files
     """
     if not os.path.isdir(folder_path):
         raise ValueError(f"'{folder_path}' is not a valid directory")
@@ -67,4 +74,4 @@ def add_folder_to_media(folder_path: str):
     for root, _, files in os.walk(folder_path):
         for file in files:
             file_path = os.path.join(root, file)
-            _add_file_to_media(file_path)
+            _add_file_to_media(file_path, overwrite=overwrite)
