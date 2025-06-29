@@ -88,7 +88,7 @@ const Markdown = ({
     children,
     className = '',
     allowHtml = false,
-    sanitize = true, // Control sanitization
+    sanitize = false, // Control sanitization
     customSanitizeSchema = null, // Allow custom schema
 }) => {
     const { colorScheme } = useMantineColorScheme();
