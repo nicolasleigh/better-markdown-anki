@@ -179,9 +179,9 @@ function App() {
             {showBasicCard && <BasicCard contentVersion={basicNodes.contentVersion} colors={colors} frontNode={basicNodes.front} backNode={basicNodes.back} extraNode={basicNodes.extra} />}
             {showClozeCard && <ClozeCard contentVersion={clozeNodes.contentVersion} colors={colors} frontNode={clozeNodes.front} backNode={clozeNodes.back} extraNode={clozeNodes.extra} />}
 
-
             {showBuyMeACoffee && (
                 <Button
+                    id="buy-me-a-coffee"
                     component="a"
                     href="https://coff.ee/alexthilleq"
                     target="_blank"
