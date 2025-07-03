@@ -1,6 +1,7 @@
-import { TypographyStylesProvider, useMantineColorScheme } from '@mantine/core';
+import { TypographyStylesProvider, useMantineColorScheme, Table } from '@mantine/core';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
+import remarkGfm from 'remark-gfm'; // Added for table support
 import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import rehypeSanitize from 'rehype-sanitize';
@@ -154,7 +155,7 @@ const Markdown = ({
                 lineHeight: '1.4',
             }}>
             <ReactMarkdown
-                remarkPlugins={[remarkMath]}
+                remarkPlugins={[remarkMath, remarkGfm]} // Math and Table support
                 rehypePlugins={buildRehypePlugins()}
                 components={{
                     pre: ({ children, ...props }) => {
@@ -195,6 +196,47 @@ const Markdown = ({
                             </code>
                         );
                     },
+                    // Table components using Mantine
+                    table: ({ children, ...props }) => (
+                        <Table
+                            striped
+                            highlightOnHover
+                            withTableBorder
+                            withColumnBorders
+                            style={{
+                                marginTop: '1em',
+                                marginBottom: '1em',
+                            }}
+                            {...props}
+                        >
+                            {children}
+                        </Table>
+                    ),
+                    thead: ({ children, ...props }) => (
+                        <Table.Thead {...props}>
+                            {children}
+                        </Table.Thead>
+                    ),
+                    tbody: ({ children, ...props }) => (
+                        <Table.Tbody {...props}>
+                            {children}
+                        </Table.Tbody>
+                    ),
+                    tr: ({ children, ...props }) => (
+                        <Table.Tr {...props}>
+                            {children}
+                        </Table.Tr>
+                    ),
+                    th: ({ children, ...props }) => (
+                        <Table.Th {...props}>
+                            {children}
+                        </Table.Th>
+                    ),
+                    td: ({ children, ...props }) => (
+                        <Table.Td {...props}>
+                            {children}
+                        </Table.Td>
+                    ),
                 }}
             >
                 {processedContent}
