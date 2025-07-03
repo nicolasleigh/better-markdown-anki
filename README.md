@@ -2,6 +2,10 @@
 
 A powerful React-based Anki add-on that transforms your flashcards with advanced markdown rendering, interactive features, and modern web technologies for an enhanced study experience.
 
+## Preview
+
+![Better Markdown Anki Preview](https://raw.githubusercontent.com/alexthillen/better-markdown-anki/refs/heads/main/.github/assets/better-markdown-anki-example.gif)
+
 ## Features
 
 ### 🎨 Enhanced Visual Experience
