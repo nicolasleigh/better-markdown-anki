@@ -192,7 +192,7 @@ const Markdown = ({
                             </SyntaxHighlighter>
                         ) : (
                             <code style={inlineCodeStyles} {...props}>
-                                {codeChildren}
+                                {codeString}
                             </code>
                         );
                     },
