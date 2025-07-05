@@ -39,10 +39,10 @@ function App() {
     // UseEffect to determine if the "Buy me a coffee" button should be shown
     useEffect(() => {
         const random = Math.random();
-        if (random <= 0.005) {
+        if (random <= 0.01) {
             setShowBuyMeACoffee(true);
             // Set a timeout to hide the button after 20 seconds
-            const timer = setTimeout(() => {
+            const _timer = setTimeout(() => {
                 setShowBuyMeACoffee(false);
             }, 20000);
         }

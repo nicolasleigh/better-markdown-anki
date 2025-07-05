@@ -14,13 +14,10 @@ import 'katex/dist/katex.min.css';
 
 // Function to decode HTML entities
 const decodeHtmlEntities = (text) => {
-    // Use the browser's DOMParser to decode HTML entities
-    if (typeof window !== 'undefined' && window.DOMParser) {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(`<!doctype html><body>${text}`, 'text/html');
-        return doc.body.textContent;
-    }
-};
+  const textArea = document.createElement('textarea')
+  textArea.innerHTML = text
+  return textArea.value
+}
 
 
 function decodeMarkdownMathContent(markdownText) {
