@@ -22,8 +22,7 @@ function removeClozeSpans(htmlString) {
 }
 
 function replaceCodeContent(markdownText) {
-    const codeBlockRegex = /\`\`\`(\w+)([\s\S]*?)\`\`\`/g;
-
+    const codeBlockRegex = /\`\`\`(\w*)([\s\S]*?)\`\`\`/g;
     let res = markdownText.replace(codeBlockRegex, (match, language, content) => {
         let processedContent = content.replace(/<br\s*\/?>/gi, '\n');
         processedContent = removeClozeSpans(processedContent);
