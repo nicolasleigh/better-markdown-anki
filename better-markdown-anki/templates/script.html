@@ -4,7 +4,7 @@
         var jsCDN = 'https://cdn.jsdelivr.net/gh/alexthillen/better-markdown-anki@{TAG}/better-markdown-anki/dist/_better_markdown_anki.js';
         var cssLocal = '_better_markdown_anki.css';
         var cssCDN = 'https://cdn.jsdelivr.net/gh/alexthillen/better-markdown-anki@{TAG}/better-markdown-anki/dist/_better_markdown_anki.css';
-
+        var cssUser = '_better_markdown_anki_user_style.css';
         // Load CSS
         function loadCSS(href, fallback) {
             var link = document.createElement('link');
@@ -17,6 +17,16 @@
                     fallbackLink.href = fallback;
                     document.head.appendChild(fallbackLink);
                 }
+            };
+            document.head.appendChild(link);
+        }
+
+        function loadCSSSilent(href) {
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = href;
+            link.onerror = function() {
+                console.log('CSS failed to load:', href);
             };
             document.head.appendChild(link);
         }
@@ -41,6 +51,7 @@
         }
 
         loadCSS(cssLocal, cssCDN);
+        loadCSSSilent(cssUser);
         loadJS(jsLocal, jsCDN);
     })();
 </script>
