@@ -40,7 +40,10 @@ function BasicCard({
                     <Paper
                         p="md"
                         bg={colors.front.bg}
-                        style={getBorderStyle(colors.front.border)}
+                        style={(theme) => ({
+                            ...getBorderStyle(colors.front.border)(theme),  // Call the inner function with theme
+                            overflowX: 'auto'
+                        })}
                         radius="sm"
                     >
                         <Markdown allowHtml={true}>{basicCardContent.front}</Markdown>
@@ -55,7 +58,10 @@ function BasicCard({
                     <Paper
                         p="md"
                         bg={colors.back.bg}
-                        style={getBorderStyle(colors.back.border)}
+                        style={(theme) => ({
+                            ...getBorderStyle(colors.back.border)(theme),
+                            overflowX: 'auto'
+                        })}
                         radius="sm"
                     >
                         <Markdown allowHtml={true}>{basicCardContent.back}</Markdown>
@@ -70,7 +76,10 @@ function BasicCard({
                     <Paper
                         p="md"
                         bg={colors.extra.bg}
-                        style={getBorderStyle(colors.extra.border)}
+                        style={(theme) => ({
+                            ...getBorderStyle(colors.extra.border)(theme),
+                            overflowX: 'auto'
+                        })}
                         radius="sm"
                     >
                         <Markdown allowHtml={true}>{basicCardContent.extra}</Markdown>

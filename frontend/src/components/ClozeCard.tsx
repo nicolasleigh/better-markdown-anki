@@ -167,11 +167,12 @@ function ClozeCard(
                     <Paper
                         p="md"
                         bg={colors.front.bg}
-                        style={{
-                            ...getBorderStyle(colors.front.border),
+                        style={(theme) => ({
+                            ...getBorderStyle(colors.front.border)(theme),
                             maxHeight: '90vh',
-                            overflowY: 'auto'
-                        }}
+                            overflowY: 'auto',
+                            overflowX: 'auto'
+                        })}
                         radius="sm"
                     >
                         <Markdown allowHtml={true}>{clozeCardContent.front}</Markdown>
@@ -186,7 +187,10 @@ function ClozeCard(
                     <Paper
                         p="md"
                         bg={colors.back.bg}
-                        style={getBorderStyle(colors.back.border)}
+                        style={(theme) => ({
+                            ...getBorderStyle(colors.back.border)(theme),
+                            overflowX: 'auto'
+                        })}
                         radius="sm"
                     >
                         <Markdown allowHtml={true}>{clozeCardContent.back}</Markdown>
@@ -201,7 +205,10 @@ function ClozeCard(
                     <Paper
                         p="md"
                         bg={colors.extra.bg}
-                        style={getBorderStyle(colors.extra.border)}
+                        style={(theme) => ({
+                            ...getBorderStyle(colors.extra.border)(theme),
+                            overflowX: 'auto'
+                        })}
                         radius="sm"
                     >
                         <Markdown allowHtml={true}>{clozeCardContent.extra}</Markdown>
