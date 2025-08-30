@@ -32,20 +32,20 @@ function App() {
   };
 
   // State for controlling the visibility of the "Buy me a coffee" button
-  const [showBuyMeACoffee, setShowBuyMeACoffee] = useState(false);
-  const [triggerBuyMeACoffee, setTriggerBuyMeACoffee] = useState(0);
+  //   const [showBuyMeACoffee, setShowBuyMeACoffee] = useState(false);
+  //   const [triggerBuyMeACoffee, setTriggerBuyMeACoffee] = useState(0);
 
-  // UseEffect to determine if the "Buy me a coffee" button should be shown
-  useEffect(() => {
-    const random = Math.random();
-    if (random <= 0.002) {
-      setShowBuyMeACoffee(true);
-      // Set a timeout to hide the button after 20 seconds
-      const _timer = setTimeout(() => {
-        setShowBuyMeACoffee(false);
-      }, 7000);
-    }
-  }, [triggerBuyMeACoffee]); // Empty dependency array ensures this runs only once on mount
+  //   // UseEffect to determine if the "Buy me a coffee" button should be shown
+  //   useEffect(() => {
+  //     const random = Math.random();
+  //     if (random <= 0.002) {
+  //       setShowBuyMeACoffee(true);
+  //       // Set a timeout to hide the button after 20 seconds
+  //       const _timer = setTimeout(() => {
+  //         setShowBuyMeACoffee(false);
+  //       }, 7000);
+  //     }
+  //   }, [triggerBuyMeACoffee]); // Empty dependency array ensures this runs only once on mount
 
   // Use useEffect to check DOM once and set state
   useEffect(() => {
@@ -69,7 +69,7 @@ function App() {
     setTags(stringToTags(tagElement ? tagElement.innerText : ''));
     setDifficulty(difficultyElement ? difficultyElement.innerText.trim() : null);
 
-    setTriggerBuyMeACoffee((prev) => prev + 1);
+    // setTriggerBuyMeACoffee((prev) => prev + 1);
 
     const observer = new MutationObserver((mutationsList) => {
       const relevantIds = [...basicIds, ...clozeIds];
@@ -117,7 +117,7 @@ function App() {
       });
       setTags(stringToTags(updatedTagsElement ? updatedTagsElement.innerText : ''));
       setDifficulty(updatedDifficultyElement ? updatedDifficultyElement.innerText.trim() : null);
-      setTriggerBuyMeACoffee((prev) => prev + 1);
+      //   setTriggerBuyMeACoffee((prev) => prev + 1);
     });
 
     // Observe the entire document for changes
@@ -190,7 +190,7 @@ function App() {
         />
       )}
 
-      {showBuyMeACoffee && (
+      {/* {showBuyMeACoffee && (
         <Button
           id='buy-me-a-coffee'
           component='a'
@@ -209,7 +209,7 @@ function App() {
         >
           Like this Addon? Consider Buying Me a Coffee!
         </Button>
-      )}
+      )} */}
     </Card>
   );
 }
