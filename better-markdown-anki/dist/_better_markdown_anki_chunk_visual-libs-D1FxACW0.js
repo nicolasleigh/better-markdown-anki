@@ -1,4 +1,4 @@
-import{r as e}from"./_better_markdown_anki_chunk_react-vendor-Bkk_KtsK.js";/**
+import{r as e}from"./_better_markdown_anki_chunk_react-vendor-45xfdv4i.js";/**
  * @license @tabler/icons-react v3.34.0 - MIT
  *
  * This source code is licensed under the MIT license.

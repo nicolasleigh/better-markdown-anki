@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { useEffect, useState } from 'react';
 import Markdown from './Markdown';
 import { Card, Paper, Stack, Text, Switch, Group } from '@mantine/core';
-import ClozeToggle from './ClozeToggle';
+// import ClozeToggle from './ClozeToggle';
 
 function removeClozeSpans(htmlString) {
   const doc = document.implementation.createHTMLDocument('');
@@ -154,7 +154,7 @@ function ClozeCard({
             <Text fw={600} size='lg' mb='xs' c='dimmed'>
               FRONT
             </Text>
-            <Group mb='xs'>
+            {/* <Group mb='xs'>
               {clozeSpans.length > 0 &&
                 clozeSpans.map((span, index) => (
                   <ClozeToggle
@@ -164,7 +164,7 @@ function ClozeCard({
                     text={symmetricConcat(span.getAttribute('data-cloze'), span.textContent)}
                   />
                 ))}
-            </Group>
+            </Group> */}
 
             <Paper
               p='md'
