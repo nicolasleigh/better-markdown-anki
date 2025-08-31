@@ -248,6 +248,8 @@ const Markdown = ({
               style={{
                 marginTop: '1em',
                 marginBottom: '1em',
+                fontSize: '20px',
+                lineHeight: '1.2',
               }}
               {...props}
             >
